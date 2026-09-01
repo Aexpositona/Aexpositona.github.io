@@ -6,41 +6,61 @@
 <title>Alejandro Expósito Navarro · Desarrollador Web Full Stack</title>
 <meta name="description" content="Desarrollador web full stack especializado en Drupal, PHP y Java. Migraciones, multisite, accesibilidad y automatización para administración pública e instituciones culturales.">
 <meta name="author" content="Alejandro Expósito Navarro">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128188;</text></svg>">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#6d28d9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%BC%3C/text%3E%3C/svg%3E">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Alejandro Expósito Navarro · Desarrollador Web Full Stack">
 <meta property="og:description" content="Drupal · PHP · Java — migraciones, multisite, accesibilidad y automatización.">
 
 <style>
+  /* ─────────────────────────────────────────────────────────────
+     Tokens. Acento morado que cumple WCAG AA/AAA:
+       #6d28d9 sobre blanco  → contraste 7.2:1
+       #c4b5fd sobre #0f0e13 → contraste 10:1
+     El texto atenuado (--mute) también pasa AA en ambos temas.
+     ───────────────────────────────────────────────────────────── */
   :root {
-    --bg:        #ffffff;
-    --surface:   #f4f6f6;
-    --line:      #dfe4e5;
-    --line-soft: #eceff0;
-    --ink:       #16191b;
-    --body:      #3c4448;
-    --mute:      #78848a;
-    --accent:    #0c6070;
-    --accent-sf: #e4eef0;
+    --bg:          #ffffff;
+    --surface:     #faf8ff;
+    --surface-2:   #f4f0fd;
+    --line:        #e2dbf3;
+    --line-strong: #c9bde8;
+    --ink:         #17151f;
+    --body:        #38343f;
+    --mute:        #5c5568;
+    --accent:      #6d28d9;
+    --accent-strong:#5b21b6;
+    --accent-sf:   #efe9fc;
+    --on-accent:   #ffffff;
+    --focus:       #6d28d9;
 
     --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     --mono: ui-monospace, 'Cascadia Mono', 'Cascadia Code', Consolas, 'Liberation Mono', monospace;
 
-    --maxw: 60rem;
+    --maxw: 62rem;
+    --nav-h: 3.5rem;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg:#0e1113; --surface:#171b1e; --line:#2a3134; --line-soft:#20262a;
-      --ink:#eef2f3; --body:#c3ccd0; --mute:#8b979d; --accent:#5fb6c7; --accent-sf:#132a30;
+      --bg:#0f0e13; --surface:#17151d; --surface-2:#1e1b27;
+      --line:#2b2836; --line-strong:#3d384c;
+      --ink:#f2f0f7; --body:#cbc7d4; --mute:#9a94a8;
+      --accent:#c4b5fd; --accent-strong:#ddd2ff; --accent-sf:#241d38;
+      --on-accent:#1a1526; --focus:#c4b5fd;
     }
   }
   :root[data-theme="dark"] {
-    --bg:#0e1113; --surface:#171b1e; --line:#2a3134; --line-soft:#20262a;
-    --ink:#eef2f3; --body:#c3ccd0; --mute:#8b979d; --accent:#5fb6c7; --accent-sf:#132a30;
+    --bg:#0f0e13; --surface:#17151d; --surface-2:#1e1b27;
+    --line:#2b2836; --line-strong:#3d384c;
+    --ink:#f2f0f7; --body:#cbc7d4; --mute:#9a94a8;
+    --accent:#c4b5fd; --accent-strong:#ddd2ff; --accent-sf:#241d38;
+    --on-accent:#1a1526; --focus:#c4b5fd;
   }
 
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html { scroll-behavior: smooth; }
 
   body {
@@ -48,159 +68,246 @@
     background: var(--bg);
     color: var(--body);
     font-family: var(--sans);
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
-  img { max-width: 100%; }
-  a { color: var(--accent); }
+  img { max-width: 100%; height: auto; }
 
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2rem); }
+  a { color: var(--accent); text-underline-offset: 0.16em; }
+  a:hover { color: var(--accent-strong); }
+
+  .wrap { max-width: var(--maxw); margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2rem); }
+
+  /* ── Enlace de salto ── */
+  .skip {
+    position: absolute; left: 0.75rem; top: 0.5rem; z-index: 100;
+    background: var(--accent); color: var(--on-accent);
+    padding: 0.6rem 0.9rem; border-radius: 6px; font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-150%);
+  }
+  .skip:focus-visible { transform: none; color: var(--on-accent); }
+
+  /* ── Foco visible (funciona sobre cualquier fondo) ── */
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--focus);
+    border-radius: 4px;
+  }
+  @media (forced-colors: active) {
+    :focus-visible { outline: 2px solid CanvasText; outline-offset: 2px; box-shadow: none; }
+  }
 
   /* ── Barra superior ── */
   header.nav {
-    position: sticky; top: 0; z-index: 10;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(8px);
+    position: sticky; top: 0; z-index: 20;
+    background: var(--bg);
     border-bottom: 1px solid var(--line);
   }
-  .nav .wrap { display: flex; align-items: center; gap: 1rem; min-height: 56px; flex-wrap: wrap; }
-  .nav .brand { font-weight: 700; color: var(--ink); letter-spacing: -0.01em; margin-right: auto; }
-  .nav nav { display: flex; gap: clamp(.6rem, 2.5vw, 1.4rem); flex-wrap: wrap; }
-  .nav nav a {
-    font-family: var(--mono); font-size: .78rem; text-transform: uppercase; letter-spacing: .08em;
+  @supports (backdrop-filter: blur(6px)) {
+    header.nav { background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(8px); }
+  }
+  .nav .wrap { display: flex; align-items: center; gap: 1rem 1.4rem; min-height: var(--nav-h); flex-wrap: wrap; padding-block: 0.4rem; }
+  .brand { font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; margin-inline-end: auto; padding: 0.35rem 0; }
+  .brand:hover { color: var(--accent); }
+  .nav ul { list-style: none; display: flex; gap: clamp(0.4rem, 2.4vw, 1.3rem); flex-wrap: wrap; margin: 0; padding: 0; }
+  .nav ul a {
+    display: inline-block; padding: 0.5rem 0.15rem;
+    font-family: var(--mono); font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.09em;
     color: var(--mute); text-decoration: none;
+    border-bottom: 2px solid transparent;
   }
-  .nav nav a:hover { color: var(--accent); }
+  .nav ul a:hover,
+  .nav ul a:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
+  .nav ul a[aria-current] { color: var(--ink); border-bottom-color: var(--accent); }
 
-  /* ── Hero ── */
-  .hero { padding: clamp(2.5rem, 8vw, 5rem) 0 clamp(2rem, 5vw, 3rem); }
-  .hero .row { display: flex; gap: clamp(1.25rem, 5vw, 2.5rem); align-items: center; flex-wrap: wrap; }
-  .hero img.photo {
-    width: 132px; height: 132px; flex: none; border-radius: 50%;
-    object-fit: cover; border: 3px solid var(--bg); box-shadow: 0 0 0 3px var(--accent);
-  }
-  .hero h1 { font-size: clamp(1.9rem, 5vw, 2.9rem); line-height: 1.05; letter-spacing: -0.025em; color: var(--ink); margin: 0; }
-  .hero .role { font-size: clamp(1rem, 2.5vw, 1.15rem); font-weight: 600; color: var(--accent); margin: .55rem 0 0; }
-  .hero .role span { color: var(--mute); font-weight: 400; }
-  .hero .place { font-family: var(--mono); font-size: .82rem; color: var(--mute); margin: .7rem 0 0; }
-  .hero p.lead { margin: 1.4rem 0 0; max-width: 46rem; font-size: 1.05rem; color: var(--ink); }
-
-  .actions { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1.6rem; }
-  .actions a {
-    display: inline-flex; align-items: center; gap: .45rem;
-    font-family: var(--mono); font-size: .8rem; text-decoration: none;
-    padding: .55rem .9rem; border-radius: 6px; border: 1px solid var(--line);
-    color: var(--body); background: var(--surface);
-  }
-  .actions a.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  :root[data-theme="dark"] .actions a.primary,
-  :root:not([data-theme="light"]) .actions a.primary { color: #06131b; }
-  .actions a:hover { border-color: var(--accent); }
-
-  /* ── Secciones ── */
-  section { padding: clamp(2.2rem, 6vw, 3.6rem) 0; border-top: 1px solid var(--line-soft); }
-  section > .wrap > h2 {
-    font-family: var(--mono); font-size: .82rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .16em; color: var(--accent);
-    margin: 0 0 1.4rem;
-  }
-  section > .wrap > h2::before { content: counter(sec, decimal-leading-zero) " / "; color: var(--mute); }
-  main { counter-reset: sec; }
-  section > .wrap > h2 { counter-increment: sec; }
-
-  .figs { display: flex; gap: .8rem; flex-wrap: wrap; margin: 0 0 1.6rem; }
-  .fig { border: 1px solid var(--line); border-radius: 6px; padding: .5rem .9rem; background: var(--surface); }
-  .fig b { display: block; font-family: var(--mono); font-size: 1.5rem; color: var(--accent); line-height: 1.1; }
-  .fig span { font-size: .78rem; color: var(--mute); }
-
-  /* Stack */
-  .stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: .9rem 1.6rem; }
-  .stack div { border-left: 2px solid var(--accent-sf); padding-left: .8rem; }
-  .stack b { display: block; color: var(--ink); font-size: .95rem; }
-  .stack b i { font-style: normal; color: var(--accent); }
-  .stack span { font-size: .88rem; color: var(--mute); }
-
-  /* Experiencia */
-  .jobs { display: flex; flex-direction: column; gap: 1.4rem; }
-  .job { border-left: 2px solid var(--accent-sf); padding-left: 1rem; }
-  .job:first-child { border-left-color: var(--accent); }
-  .job .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .7rem; }
-  .job h3 { margin: 0; font-size: 1.1rem; color: var(--ink); letter-spacing: -0.01em; }
-  .job .org { color: var(--body); font-size: .95rem; }
-  .job .when { margin-left: auto; font-family: var(--mono); font-size: .78rem; color: var(--mute); white-space: nowrap; }
-  .job ul { margin: .55rem 0 0; padding-left: 1.1rem; }
-  .job li { margin: .25rem 0; }
-  .job strong { color: var(--ink); font-weight: 650; }
-  code {
-    font-family: var(--mono); font-size: .86em; background: var(--accent-sf);
-    color: var(--accent); border-radius: 3px; padding: .05em .35em;
-  }
-
-  /* Proyectos */
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; }
-  .card {
-    border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.15rem;
-    background: var(--surface); display: flex; flex-direction: column; gap: .5rem;
-  }
-  .card h3 { margin: 0; font-size: 1.02rem; color: var(--ink); }
-  .card p { margin: 0; font-size: .9rem; }
-  .card .tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: auto; padding-top: .5rem; }
-  .card .tags span {
-    font-family: var(--mono); font-size: .7rem; color: var(--mute);
-    border: 1px solid var(--line); border-radius: 4px; padding: .1rem .4rem;
-  }
-  .card a.repo { font-family: var(--mono); font-size: .78rem; text-decoration: none; align-self: flex-start; }
-  .card a.repo::after { content: " ↗"; }
-  .card.muted { background: transparent; }
-
-  /* Formación / contacto */
-  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.4rem 2rem; }
-  .two b { color: var(--ink); display: block; }
-  .two span, .two a { font-size: .9rem; color: var(--mute); }
-
-  .contact a { display: inline-block; margin-right: 1.2rem; font-family: var(--mono); font-size: .85rem; }
-
-  footer { padding: 2.5rem 0 3rem; border-top: 1px solid var(--line-soft); }
-  footer p { font-family: var(--mono); font-size: .78rem; color: var(--mute); margin: 0; }
-
-  /* Toggle de tema */
   .theme-btn {
-    border: 1px solid var(--line); background: var(--surface); color: var(--body);
-    font-family: var(--mono); font-size: .72rem; border-radius: 6px; padding: .35rem .6rem;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    min-height: 2.25rem; padding: 0.4rem 0.7rem;
+    border: 1px solid var(--line-strong); border-radius: 7px;
+    background: var(--surface); color: var(--body);
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em;
     cursor: pointer;
   }
   .theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .theme-btn svg { width: 1rem; height: 1rem; }
+
+  /* ── Contenedor de secciones ── */
+  main > section, .hero {
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2rem);
+  }
+
+  /* ── Hero ── */
+  .hero { padding-block: clamp(2.5rem, 8vw, 4.5rem) clamp(1.75rem, 4vw, 2.5rem); scroll-margin-top: calc(var(--nav-h) + 1rem); }
+  .hero .row { display: flex; gap: clamp(1.25rem, 5vw, 2.75rem); align-items: center; flex-wrap: wrap; }
+  .hero .photo {
+    width: 132px; height: 132px; flex: none; border-radius: 50%;
+    object-fit: cover; border: 3px solid var(--bg); box-shadow: 0 0 0 3px var(--accent);
+  }
+  .hero h1 { font-size: clamp(1.95rem, 5.2vw, 3rem); line-height: 1.05; letter-spacing: -0.025em; color: var(--ink); margin: 0; }
+  .hero .role { font-size: clamp(1rem, 2.5vw, 1.18rem); font-weight: 600; color: var(--accent); margin: 0.55rem 0 0; }
+  .hero .role .rest { color: var(--mute); font-weight: 400; }
+  .hero .place { font-family: var(--mono); font-size: 0.82rem; color: var(--mute); margin: 0.7rem 0 0; }
+  .hero .lead { margin: 1.5rem 0 0; max-width: 48rem; font-size: 1.06rem; color: var(--ink); }
+
+  .actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1.7rem; }
+  .actions a {
+    display: inline-flex; align-items: center; min-height: 2.5rem;
+    padding: 0.6rem 1rem; border-radius: 7px; border: 1px solid var(--line-strong);
+    font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.02em;
+    color: var(--body); background: var(--surface); text-decoration: none;
+  }
+  .actions a:hover { border-color: var(--accent); color: var(--accent); }
+  .actions a.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 600; }
+  .actions a.primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); color: var(--on-accent); }
+
+  .hero-rule {
+    height: 3px; border: 0; margin: clamp(1.75rem, 5vw, 2.75rem) 0 0;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 18%, var(--accent-sf) 55%, transparent 100%);
+  }
+
+  /* ── Secciones ── */
+  main > section { padding-block: clamp(2.4rem, 6vw, 3.8rem); border-top: 1px solid var(--line); scroll-margin-top: calc(var(--nav-h) + 1rem); }
+  main > section:first-of-type { border-top: 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 0.6rem; margin: 0 0 1.5rem; }
+  .sec-head .num {
+    font-family: var(--mono); font-size: 0.8rem; font-weight: 700;
+    color: var(--mute); letter-spacing: 0.1em;
+  }
+  .sec-head h2 {
+    font-family: var(--mono); font-size: 0.82rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent);
+    margin: 0;
+  }
+
+  p { margin: 0 0 1rem; }
+  section p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); font-weight: 650; }
+  code {
+    font-family: var(--mono); font-size: 0.86em;
+    background: var(--accent-sf); color: var(--accent);
+    border-radius: 4px; padding: 0.08em 0.36em;
+  }
+
+  /* ── Cifras ── */
+  .figs { display: flex; gap: 0.8rem; flex-wrap: wrap; margin: 0 0 1.6rem; padding: 0; list-style: none; }
+  .figs li { border: 1px solid var(--line); border-radius: 8px; padding: 0.55rem 0.95rem; background: var(--surface); }
+  .figs b { display: block; font-family: var(--mono); font-size: 1.55rem; color: var(--accent); line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .figs span { font-size: 0.78rem; color: var(--mute); }
+
+  /* ── Stack ── */
+  .stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem 1.7rem; margin: 0; padding: 0; list-style: none; }
+  .stack > li { border-left: 2px solid var(--accent-sf); padding-left: 0.85rem; }
+  .stack b { display: block; color: var(--ink); font-size: 0.96rem; margin-bottom: 0.1rem; }
+  .stack b .hl { color: var(--accent); }
+  .stack span { font-size: 0.9rem; color: var(--mute); }
+
+  /* ── Experiencia ── */
+  .timeline { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1.5rem; }
+  .job { border-left: 2px solid var(--accent-sf); padding-left: 1.1rem; }
+  .job:first-child { border-left-color: var(--accent); }
+  .job .head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.7rem; }
+  .job h3 { margin: 0; font-size: 1.12rem; color: var(--ink); letter-spacing: -0.01em; }
+  .job .org { color: var(--body); font-size: 0.95rem; }
+  .job .when { margin-inline-start: auto; font-family: var(--mono); font-size: 0.78rem; color: var(--mute); white-space: nowrap; }
+  .job ul { margin: 0.6rem 0 0; padding-left: 1.15rem; }
+  .job li { margin: 0.3rem 0; }
+  @media (max-width: 34rem) { .job .when { margin-inline-start: 0; } }
+
+  /* ── Proyectos ── */
+  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+  .card {
+    border: 1px solid var(--line); border-radius: 10px; padding: 1.15rem 1.2rem;
+    background: var(--surface-2); display: flex; flex-direction: column; gap: 0.55rem;
+  }
+  .card.is-code { border-color: var(--line-strong); border-top: 3px solid var(--accent); }
+  .card.is-case { background: transparent; }
+  .card .kind { font-family: var(--mono); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mute); }
+  .card h3 { margin: 0; font-size: 1.05rem; color: var(--ink); }
+  .card p { margin: 0; font-size: 0.92rem; }
+  .card .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: auto; padding-top: 0.5rem; list-style: none; padding-inline: 0; }
+  .card .tags li {
+    font-family: var(--mono); font-size: 0.7rem; color: var(--mute);
+    border: 1px solid var(--line-strong); border-radius: 5px; padding: 0.12rem 0.42rem;
+  }
+  .card .repo { font-family: var(--mono); font-size: 0.78rem; align-self: flex-start; }
+  .card .repo::after { content: " \2197"; }
+
+  /* ── Formación / bandas ── */
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.4rem 2rem; margin: 0; padding: 0; list-style: none; }
+  .cols b { color: var(--ink); display: block; margin-bottom: 0.15rem; }
+  .cols span { font-size: 0.9rem; color: var(--mute); }
+
+  .contact-list { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; margin: 0; padding: 0; list-style: none; }
+  .contact-list a { font-family: var(--mono); font-size: 0.9rem; }
+
+  /* ── Pie ── */
+  footer {
+    background: var(--surface);
+    border-top: 3px solid var(--accent);
+    padding: 2.4rem 0 3rem;
+    margin-top: clamp(2rem, 6vw, 3.5rem);
+  }
+  footer p { margin: 0.4rem 0 0; font-size: 0.85rem; color: var(--mute); }
+  footer p:first-child { margin-top: 0; }
+  footer .mono { font-family: var(--mono); }
+
+  .visually-hidden {
+    position: absolute !important; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0);
+    white-space: nowrap; border: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  }
 
   @media print {
-    .nav, .theme-btn, .actions { display: none; }
-    section { border: 0; }
+    header.nav, .theme-btn, .skip, .actions { display: none; }
+    main > section, footer { border: 0; }
+    footer { background: none; }
   }
 </style>
 </head>
 <body>
 
+<a class="skip" href="#main">Saltar al contenido</a>
+
 <header class="nav">
   <div class="wrap">
-    <span class="brand">Alejandro Expósito</span>
-    <nav>
-      <a href="#sobre-mi">Sobre mí</a>
-      <a href="#stack">Stack</a>
-      <a href="#experiencia">Experiencia</a>
-      <a href="#proyectos">Proyectos</a>
-      <a href="#contacto">Contacto</a>
+    <a class="brand" href="#top">Alejandro Expósito</a>
+    <nav aria-label="Secciones de la página">
+      <ul>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#experiencia">Experiencia</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
     </nav>
-    <button class="theme-btn" id="theme" type="button" aria-label="Cambiar tema">tema</button>
+    <button class="theme-btn" id="theme" type="button" aria-pressed="false" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+      </svg>
+      <span id="theme-label">Tema</span>
+    </button>
   </div>
 </header>
 
-<div class="hero">
-  <div class="wrap">
+<main id="main">
+
+  <section class="hero" id="top" aria-labelledby="hero-name">
     <div class="row">
-      <img class="photo" src="foto-perfil.png" alt="Alejandro Expósito Navarro" width="132" height="132">
+      <img class="photo" src="foto-perfil.png" alt="Retrato de Alejandro Expósito Navarro" width="132" height="132">
       <div>
-        <h1>Alejandro Expósito Navarro</h1>
-        <p class="role">Desarrollador Web Full Stack <span>· Drupal · PHP · Java</span></p>
+        <h1 id="hero-name">Alejandro Expósito Navarro</h1>
+        <p class="role">Desarrollador Web Full Stack <span class="rest">· Drupal · PHP · Java</span></p>
         <p class="place">Camp de Tarragona · remoto / híbrido</p>
       </div>
     </div>
@@ -212,174 +319,210 @@
     </p>
     <div class="actions">
       <a class="primary" href="mailto:aexpositona@gmail.com">Escríbeme</a>
-      <a href="https://github.com/Aexpositona" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://linkedin.com/in/alejandro-exposito-navarro" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="CV-Alejandro-Exposito-Navarro.pdf" target="_blank" rel="noopener">CV (PDF)</a>
+      <a href="https://github.com/Aexpositona" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+      <a href="https://linkedin.com/in/alejandro-exposito-navarro" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+      <a href="CV-Alejandro-Exposito-Navarro.pdf" target="_blank" rel="noopener">CV (PDF)<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
     </div>
-  </div>
-</div>
-
-<main>
-
-  <section id="sobre-mi">
-    <div class="wrap">
-      <h2>Sobre mí</h2>
-      <div class="figs">
-        <div class="fig"><b>57</b><span>webs migradas</span></div>
-        <div class="fig"><b>11</b><span>cuentas gestionadas</span></div>
-        <div class="fig"><b>31</b><span>dominios traspasados</span></div>
-        <div class="fig"><b>2 a</b><span>de experiencia</span></div>
-      </div>
-      <p>
-        Vengo de agencia, llevando cuentas de sector público catalán y balear —Teatre Nacional de Catalunya,
-        Ivàlua, Consell de Mallorca, MUHBA, Museu Frederic Marès—. Mi trabajo diario es Drupal 10/11 y PHP 8.3,
-        pero también he hecho APIs y scripts en Java puro, herramientas internas en Python, y mantenimiento de
-        WordPress y Shopify. Trabajo con procedimiento escrito, ventanas de despliegue con rollback verificado y
-        auditorías de accesibilidad. Busco un puesto estable de desarrollo full stack o backend, en remoto,
-        híbrido o presencial en el Camp de Tarragona.
-      </p>
-    </div>
+    <hr class="hero-rule">
   </section>
 
-  <section id="stack">
-    <div class="wrap">
-      <h2>Stack</h2>
-      <div class="stack">
-        <div><b>Drupal <i>10 / 11</i></b><span>Migraciones de versión mayor, multisite, Paragraphs, Views, roles y permisos, módulos y temas a medida</span></div>
-        <div><b>Backend</b><span>PHP 8.3, Symfony (routing, DI, Twig, Console), MySQL, Drush, Composer · Java (APIs REST, scripts) · Python 3</span></div>
-        <div><b>WordPress · Shopify</b><span>Temas, mantenimiento, e-commerce y despliegue por preview no publicado</span></div>
-        <div><b>Entorno</b><span>DDEV, WSL2 / Linux, administración por SSH, Git · GitLab · GitHub, CI/CD, gestión de dominios y DNS</span></div>
-        <div><b>Front</b><span>Twig, HTML / CSS / Sass / Tailwind, JavaScript / TypeScript, React y React Native (Expo), diseño responsive</span></div>
-        <div><b>Accesibilidad</b><span>Auditorías WCAG y remediación</span></div>
-        <div><b>Dirección de IA</b><span>Orquestación de asistentes de código y agentes con MCP; prompting con criterios de aceptación para triaje, refactor y revisión</span></div>
-        <div><b>Idiomas</b><span>Castellano y catalán nativos · Inglés B1</span></div>
-      </div>
-    </div>
+  <section id="sobre-mi" aria-labelledby="h-sobre">
+    <div class="sec-head"><span class="num" aria-hidden="true">01</span><h2 id="h-sobre">Sobre mí</h2></div>
+    <ul class="figs">
+      <li><b>57</b><span>webs migradas</span></li>
+      <li><b>11</b><span>cuentas gestionadas</span></li>
+      <li><b>31</b><span>dominios traspasados</span></li>
+      <li><b>2&nbsp;a</b><span>de experiencia</span></li>
+    </ul>
+    <p>
+      Vengo de agencia, llevando cuentas de sector público catalán y balear —Teatre Nacional de Catalunya,
+      Ivàlua, Consell de Mallorca, MUHBA, Museu Frederic Marès—. Mi trabajo diario es Drupal 10/11 y PHP 8.3,
+      pero también he hecho APIs y scripts en Java puro, herramientas internas en Python, y mantenimiento de
+      WordPress y Shopify. Trabajo con procedimiento escrito, ventanas de despliegue con rollback verificado y
+      auditorías de accesibilidad. Busco un puesto estable de desarrollo full stack o backend, en remoto,
+      híbrido o presencial en el Camp de Tarragona.
+    </p>
   </section>
 
-  <section id="experiencia">
-    <div class="wrap">
-      <h2>Experiencia</h2>
-      <div class="jobs">
-        <div class="job">
-          <div class="head">
-            <h3>Fullstack Web Developer &amp; Key Account Manager</h3>
-            <span class="org">Kiwop · agencia digital, Reus</span>
-            <span class="when">jun 2024 – jul 2026</span>
-          </div>
-          <ul>
-            <li><strong>Migración de 57 webs municipales</strong> del Consell de Mallorca a un design system responsive y accesible: entorno de preproducción por municipio, runbook de despliegue, ventana de publicación de 5 minutos y rollback verificado.</li>
-            <li><strong>Migraciones a Drupal 11</strong> de Teatre Nacional de Catalunya e Ivàlua ante el EOL de Drupal 10: análisis de 22 módulos contribuidos, salto a <code>PHP 8.3</code>, CKEditor 5 y adaptación de módulos y tema a medida.</li>
-            <li>Modelado de contenidos con <strong>Paragraphs</strong> y Views, perfiles y permisos de edición, y <strong>auditoría y remediación de accesibilidad</strong> (WCAG).</li>
-            <li>Gestión de entornos con <strong>DDEV sobre WSL2</strong>, sincronía DEV/PRE/PRO y traspaso de <strong>31 dominios <code>.es</code></strong> ante NIC.es.</li>
-            <li>Herramienta interna en <strong>Python</strong> (control de horas, facturación en PDF, integración con Trello y API REST), empaquetada y entregada al equipo. Como <strong>KAM</strong>: propuestas, estimaciones, control de bolsas de horas y formación a los equipos editores del cliente.</li>
-          </ul>
-        </div>
-        <div class="job">
-          <div class="head">
-            <h3>Operario de cadena de producción</h3>
-            <span class="org">Nissan Motor Ibérica</span>
-            <span class="when">2013 – 2020</span>
-          </div>
-          <ul>
-            <li>Línea de montaje bajo estándar de automoción. De ahí el hábito del procedimiento escrito y de cazar el defecto en el propio puesto, que es como reviso hoy un despliegue.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+  <section id="stack" aria-labelledby="h-stack">
+    <div class="sec-head"><span class="num" aria-hidden="true">02</span><h2 id="h-stack">Stack</h2></div>
+    <ul class="stack">
+      <li><b>Drupal <span class="hl">10 / 11</span></b><span>Migraciones de versión mayor, multisite, Paragraphs, Views, roles y permisos, módulos y temas a medida</span></li>
+      <li><b>Backend</b><span>PHP 8.3, Symfony (routing, DI, Twig, Console), MySQL, Drush, Composer · Java (APIs REST, scripts) · Python 3</span></li>
+      <li><b>WordPress · Shopify</b><span>Temas, mantenimiento, e-commerce y despliegue por preview no publicado</span></li>
+      <li><b>Entorno</b><span>DDEV, WSL2 / Linux, administración por SSH, Git · GitLab · GitHub, CI/CD, gestión de dominios y DNS</span></li>
+      <li><b>Front</b><span>Twig, HTML / CSS / Sass / Tailwind, JavaScript / TypeScript, React y React Native (Expo), diseño responsive</span></li>
+      <li><b>Accesibilidad</b><span>Auditorías WCAG y remediación</span></li>
+      <li><b>Dirección de IA</b><span>Orquestación de asistentes de código y agentes con MCP; prompting con criterios de aceptación para triaje, refactor y revisión</span></li>
+      <li><b>Idiomas</b><span>Castellano y catalán nativos · Inglés B1</span></li>
+    </ul>
   </section>
 
-  <section id="proyectos">
-    <div class="wrap">
-      <h2>Proyectos</h2>
-      <div class="cards">
-        <div class="card">
-          <h3>Flora</h3>
-          <p>Juego educativo de botánica para aprender nombres científicos de plantas: varios modos de quiz, reconocimiento por imagen y CRUD completo de la colección, sin conexión.</p>
-          <p>App de escritorio con arquitectura <strong>MVC</strong> (controllers / models / views), persistencia en JSON y distribución como ejecutable Windows. Open source.</p>
-          <div class="tags"><span>Python</span><span>tkinter</span><span>Pillow</span><span>PyInstaller</span><span>MVC</span></div>
-          <a class="repo" href="https://github.com/Aexpositona/Flora" target="_blank" rel="noopener">github.com/Aexpositona/Flora</a>
+  <section id="experiencia" aria-labelledby="h-exp">
+    <div class="sec-head"><span class="num" aria-hidden="true">03</span><h2 id="h-exp">Experiencia</h2></div>
+    <ul class="timeline">
+      <li class="job">
+        <div class="head">
+          <h3>Fullstack Web Developer &amp; Key Account Manager</h3>
+          <span class="org">Kiwop · agencia digital, Reus</span>
+          <span class="when">jun 2024 – jul 2026</span>
         </div>
-        <div class="card">
-          <h3>Meals4yuris</h3>
-          <p>App móvil (Android / iOS) de planificación de comidas semanales en pareja: plan semanal, CRUD de recetas, despensa y lista de la compra autogenerada. 50 recetas, tema oscuro, bilingüe.</p>
-          <p>Enrutado por ficheros con <strong>Expo Router</strong>, estado global con <strong>Zustand</strong> + AsyncStorage y backend en <strong>Supabase</strong> (auth, Postgres, realtime). TypeScript estricto.</p>
-          <div class="tags"><span>React Native</span><span>Expo</span><span>TypeScript</span><span>Zustand</span><span>Supabase</span></div>
-          <a class="repo" href="https://github.com/Aexpositona/Meals4yuris" target="_blank" rel="noopener">github.com/Aexpositona/Meals4yuris</a>
+        <ul>
+          <li><strong>Migración de 57 webs municipales</strong> del Consell de Mallorca a un design system responsive y accesible: entorno de preproducción por municipio, runbook de despliegue, ventana de publicación de 5 minutos y rollback verificado.</li>
+          <li><strong>Migraciones a Drupal 11</strong> de Teatre Nacional de Catalunya e Ivàlua ante el EOL de Drupal 10: análisis de 22 módulos contribuidos, salto a <code>PHP 8.3</code>, CKEditor 5 y adaptación de módulos y tema a medida.</li>
+          <li>Modelado de contenidos con <strong>Paragraphs</strong> y Views, perfiles y permisos de edición, y <strong>auditoría y remediación de accesibilidad</strong> (WCAG).</li>
+          <li>Gestión de entornos con <strong>DDEV sobre WSL2</strong>, sincronía DEV/PRE/PRO y traspaso de <strong>31 dominios <code>.es</code></strong> ante NIC.es.</li>
+          <li>Herramienta interna en <strong>Python</strong> (control de horas, facturación en PDF, integración con Trello y API REST), empaquetada y entregada al equipo. Como <strong>KAM</strong>: propuestas, estimaciones, control de bolsas de horas y formación a los equipos editores del cliente.</li>
+        </ul>
+      </li>
+      <li class="job">
+        <div class="head">
+          <h3>Operario de cadena de producción</h3>
+          <span class="org">Nissan Motor Ibérica</span>
+          <span class="when">2013 – 2020</span>
         </div>
-        <div class="card muted">
-          <h3>Consell de Mallorca — 57 webs municipales</h3>
-          <p>Diseño y ejecución del proceso de migración de 57 sitios a un design system responsive y accesible: entorno PRE por municipio, runbook de despliegue y publicación en ventana de 5 minutos con rollback garantizado.</p>
-          <div class="tags"><span>Drupal</span><span>Design system</span><span>Despliegue</span><span>DNS</span></div>
-        </div>
-        <div class="card muted">
-          <h3>Drupal 10 → 11 · TNC e Ivàlua</h3>
-          <p>Análisis de módulos contribuidos y del salto a PHP 8.3 y CKEditor 5, adaptación de módulos y tema a medida, y auditoría de accesibilidad con su remediación.</p>
-          <div class="tags"><span>Drupal 11</span><span>PHP 8.3</span><span>WCAG</span><span>Symfony</span></div>
-        </div>
-        <div class="card muted">
-          <h3>Herramienta interna de control horario</h3>
-          <p>Sistema propio en Python para registro de horas, cierre diario, facturación en PDF con cuadre exacto e integración con Trello y API. Documentado y entregado al equipo.</p>
-          <div class="tags"><span>Python</span><span>openpyxl</span><span>WeasyPrint</span><span>API REST</span></div>
-        </div>
-      </div>
-    </div>
+        <ul>
+          <li>Línea de montaje bajo estándar de automoción. De ahí el hábito del procedimiento escrito y de cazar el defecto en el propio puesto, que es como reviso hoy un despliegue.</li>
+        </ul>
+      </li>
+    </ul>
   </section>
 
-  <section id="formacion">
-    <div class="wrap">
-      <h2>Formación</h2>
-      <div class="two">
-        <div>
-          <b>CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)</b>
-          <span>Grado Superior · Universitat Oberta de Catalunya · 2022 – 2025</span>
-        </div>
-        <div>
-          <b>Sectores</b>
-          <span>Administración pública e instituciones culturales — TNC · Ivàlua · Consell de Mallorca · MUHBA · Museu Frederic Marès · Vallès Oriental</span>
-        </div>
-      </div>
-    </div>
+  <section id="proyectos" aria-labelledby="h-proj">
+    <div class="sec-head"><span class="num" aria-hidden="true">04</span><h2 id="h-proj">Proyectos</h2></div>
+    <ul class="projects">
+      <li class="card is-code">
+        <span class="kind">Proyecto propio</span>
+        <h3>Flora</h3>
+        <p>Juego educativo de botánica para aprender nombres científicos de plantas: varios modos de quiz, reconocimiento por imagen y CRUD completo de la colección, sin conexión.</p>
+        <p>App de escritorio con arquitectura <strong>MVC</strong> (controllers / models / views), persistencia en JSON y distribución como ejecutable Windows. Open source.</p>
+        <ul class="tags"><li>Python</li><li>tkinter</li><li>Pillow</li><li>PyInstaller</li><li>MVC</li></ul>
+        <a class="repo" href="https://github.com/Aexpositona/Flora" target="_blank" rel="noopener">github.com/Aexpositona/Flora<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+      </li>
+      <li class="card is-code">
+        <span class="kind">Proyecto propio</span>
+        <h3>Meals4yuris</h3>
+        <p>App móvil (Android / iOS) de planificación de comidas semanales en pareja: plan semanal, CRUD de recetas, despensa y lista de la compra autogenerada. 50 recetas, tema oscuro, bilingüe.</p>
+        <p>Enrutado por ficheros con <strong>Expo Router</strong>, estado global con <strong>Zustand</strong> + AsyncStorage y backend en <strong>Supabase</strong> (auth, Postgres, realtime). TypeScript estricto.</p>
+        <ul class="tags"><li>React Native</li><li>Expo</li><li>TypeScript</li><li>Zustand</li><li>Supabase</li></ul>
+        <a class="repo" href="https://github.com/Aexpositona/Meals4yuris" target="_blank" rel="noopener">github.com/Aexpositona/Meals4yuris<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+      </li>
+      <li class="card is-case">
+        <span class="kind">Caso de agencia</span>
+        <h3>Consell de Mallorca — 57 webs municipales</h3>
+        <p>Diseño y ejecución del proceso de migración de 57 sitios a un design system responsive y accesible: entorno PRE por municipio, runbook de despliegue y publicación en ventana de 5 minutos con rollback garantizado.</p>
+        <ul class="tags"><li>Drupal</li><li>Design system</li><li>Despliegue</li><li>DNS</li></ul>
+      </li>
+      <li class="card is-case">
+        <span class="kind">Caso de agencia</span>
+        <h3>Drupal 10 → 11 · TNC e Ivàlua</h3>
+        <p>Análisis de módulos contribuidos y del salto a PHP 8.3 y CKEditor 5, adaptación de módulos y tema a medida, y auditoría de accesibilidad con su remediación.</p>
+        <ul class="tags"><li>Drupal 11</li><li>PHP 8.3</li><li>WCAG</li><li>Symfony</li></ul>
+      </li>
+      <li class="card is-case">
+        <span class="kind">Caso de agencia</span>
+        <h3>Herramienta interna de control horario</h3>
+        <p>Sistema propio en Python para registro de horas, cierre diario, facturación en PDF con cuadre exacto e integración con Trello y API. Documentado y entregado al equipo.</p>
+        <ul class="tags"><li>Python</li><li>openpyxl</li><li>WeasyPrint</li><li>API REST</li></ul>
+      </li>
+    </ul>
   </section>
 
-  <section id="contacto">
-    <div class="wrap">
-      <h2>Contacto</h2>
-      <p class="contact">
-        <a href="mailto:aexpositona@gmail.com">aexpositona@gmail.com</a>
-        <a href="https://github.com/Aexpositona" target="_blank" rel="noopener">github.com/Aexpositona</a>
-        <a href="https://linkedin.com/in/alejandro-exposito-navarro" target="_blank" rel="noopener">linkedin.com/in/alejandro-exposito-navarro</a>
-      </p>
-    </div>
+  <section id="formacion" aria-labelledby="h-form">
+    <div class="sec-head"><span class="num" aria-hidden="true">05</span><h2 id="h-form">Formación</h2></div>
+    <ul class="cols">
+      <li>
+        <b>CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)</b>
+        <span>Grado Superior · Universitat Oberta de Catalunya · 2022 – 2025</span>
+      </li>
+      <li>
+        <b>Sectores</b>
+        <span>Administración pública e instituciones culturales — TNC · Ivàlua · Consell de Mallorca · MUHBA · Museu Frederic Marès · Vallès Oriental</span>
+      </li>
+    </ul>
+  </section>
+
+  <section id="contacto" aria-labelledby="h-cont">
+    <div class="sec-head"><span class="num" aria-hidden="true">06</span><h2 id="h-cont">Contacto</h2></div>
+    <ul class="contact-list">
+      <li><a href="mailto:aexpositona@gmail.com">aexpositona@gmail.com</a></li>
+      <li><a href="https://github.com/Aexpositona" target="_blank" rel="noopener">github.com/Aexpositona<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a></li>
+      <li><a href="https://linkedin.com/in/alejandro-exposito-navarro" target="_blank" rel="noopener">linkedin.com/in/alejandro-exposito-navarro<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a></li>
+    </ul>
   </section>
 
 </main>
 
 <footer>
   <div class="wrap">
-    <p>© <span id="y"></span> Alejandro Expósito Navarro · Hecho a mano, servido con GitHub Pages</p>
+    <p class="mono">© <span id="y"></span> Alejandro Expósito Navarro</p>
+    <p>Sitio estático, sin dependencias ni rastreo. Construido siguiendo las WCAG 2.2 AA: contraste verificado, foco visible, navegación por teclado, semántica de landmarks y respeto a <span class="mono">prefers-reduced-motion</span>.</p>
   </div>
 </footer>
 
 <script>
   (function () {
-    var root = document.documentElement, btn = document.getElementById('theme');
+    'use strict';
+    var root = document.documentElement;
+    var btn = document.getElementById('theme');
+    var label = document.getElementById('theme-label');
     var KEY = 'tema';
+
+    function systemDark() {
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    function current() {
+      return root.getAttribute('data-theme') || (systemDark() ? 'dark' : 'light');
+    }
+    function apply(mode) {
+      root.setAttribute('data-theme', mode);
+      var isDark = mode === 'dark';
+      if (btn) {
+        btn.setAttribute('aria-pressed', String(isDark));
+        btn.setAttribute('aria-label', isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+      }
+      if (label) label.textContent = isDark ? 'Claro' : 'Oscuro';
+    }
+
     try {
       var saved = localStorage.getItem(KEY);
-      if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
-      else root.removeAttribute('data-theme');
-    } catch (e) {}
-    function current() {
-      return root.getAttribute('data-theme') ||
-        (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      if (saved === 'light' || saved === 'dark') apply(saved);
+      else { root.removeAttribute('data-theme'); apply(current()); }
+    } catch (e) { apply(current()); }
+
+    if (btn) {
+      btn.hidden = false;
+      btn.addEventListener('click', function () {
+        var next = current() === 'dark' ? 'light' : 'dark';
+        apply(next);
+        try { localStorage.setItem(KEY, next); } catch (e) {}
+      });
     }
-    btn && btn.addEventListener('click', function () {
-      var next = current() === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      try { localStorage.setItem(KEY, next); } catch (e) {}
-    });
-    var y = document.getElementById('y'); if (y) y.textContent = new Date().getFullYear();
+
+    var y = document.getElementById('y');
+    if (y) y.textContent = new Date().getFullYear();
+
+    // Scroll-spy: marca el enlace de la sección visible con aria-current.
+    if ('IntersectionObserver' in window) {
+      var links = {};
+      document.querySelectorAll('.nav ul a[href^="#"]').forEach(function (a) {
+        links[a.getAttribute('href').slice(1)] = a;
+      });
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          var a = links[en.target.id];
+          if (!a) return;
+          if (en.isIntersecting) {
+            Object.keys(links).forEach(function (k) { links[k].removeAttribute('aria-current'); });
+            a.setAttribute('aria-current', 'true');
+          }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      Object.keys(links).forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) obs.observe(el);
+      });
+    }
   })();
 </script>
 
