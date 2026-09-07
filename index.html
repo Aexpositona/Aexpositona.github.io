@@ -125,6 +125,25 @@
   .nav ul a:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
   .nav ul a[aria-current] { color: var(--ink); border-bottom-color: var(--accent); }
 
+  .nav-tools { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+
+  /* ── Selector de idioma ── */
+  .langsel {
+    display: inline-flex; align-items: stretch;
+    border: 1px solid var(--line-strong); border-radius: 7px; overflow: hidden;
+    background: var(--surface);
+  }
+  .langsel button {
+    border: 0; background: transparent; color: var(--mute);
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em;
+    padding: 0.4rem 0.6rem; min-height: 2.25rem; cursor: pointer;
+  }
+  .langsel button + button { border-inline-start: 1px solid var(--line-strong); }
+  .langsel button:hover { color: var(--accent); }
+  .langsel button[aria-pressed="true"] {
+    background: var(--accent); color: var(--on-accent); font-weight: 600;
+  }
+
   .theme-btn {
     display: inline-flex; align-items: center; gap: 0.4rem;
     min-height: 2.25rem; padding: 0.4rem 0.7rem;
@@ -274,7 +293,7 @@
   }
 
   @media print {
-    header.nav, .theme-btn, .skip, .actions { display: none; }
+    header.nav, .theme-btn, .langsel, .skip, .actions { display: none; }
     main > section, footer { border: 0; }
     footer { background: none; }
   }
@@ -282,27 +301,34 @@
 </head>
 <body>
 
-<a class="skip" href="#main">Saltar al contenido</a>
+<a class="skip" href="#main" data-i18n="skip">Saltar al contenido</a>
 
 <header class="nav">
   <div class="wrap">
     <a class="brand" href="#top">Alejandro Expósito</a>
-    <nav aria-label="Secciones de la página">
+    <nav aria-label="Secciones de la página" data-i18n="nav.aria" data-i18n-attr="aria-label">
       <ul>
-        <li><a href="#sobre-mi">Sobre mí</a></li>
-        <li><a href="#stack">Stack</a></li>
-        <li><a href="#experiencia">Experiencia</a></li>
-        <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="#sobre-mi" data-i18n="nav.about">Sobre mí</a></li>
+        <li><a href="#stack" data-i18n="nav.stack">Stack</a></li>
+        <li><a href="#experiencia" data-i18n="nav.experience">Experiencia</a></li>
+        <li><a href="#proyectos" data-i18n="nav.projects">Proyectos</a></li>
+        <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
       </ul>
     </nav>
-    <button class="theme-btn" id="theme" type="button" aria-pressed="false" hidden>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <circle cx="12" cy="12" r="4"></circle>
-        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
-      </svg>
-      <span id="theme-label">Tema</span>
-    </button>
+    <div class="nav-tools">
+      <div class="langsel" role="group" aria-label="Idioma" data-i18n="lang.aria" data-i18n-attr="aria-label">
+        <button type="button" data-lang="es" lang="es" aria-label="Español" aria-pressed="true">ES</button>
+        <button type="button" data-lang="ca" lang="ca" aria-label="Català" aria-pressed="false">CA</button>
+        <button type="button" data-lang="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+      </div>
+      <button class="theme-btn" id="theme" type="button" aria-pressed="false" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+        </svg>
+        <span id="theme-label">Tema</span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -310,37 +336,37 @@
 
   <section class="hero" id="top" aria-labelledby="hero-name">
     <div class="row">
-      <img class="photo" src="foto-perfil.png" alt="Retrato de Alejandro Expósito Navarro" width="132" height="132">
+      <img class="photo" src="foto-perfil.png" alt="Retrato de Alejandro Expósito Navarro" data-i18n="hero.alt" data-i18n-attr="alt" width="132" height="132">
       <div>
         <h1 id="hero-name">Alejandro Expósito Navarro</h1>
-        <p class="role">Desarrollador Web Full Stack <span class="rest">· Drupal · PHP · Java</span></p>
-        <p class="place">Camp de Tarragona · remoto / híbrido</p>
+        <p class="role" data-i18n="hero.role">Desarrollador Web Full Stack <span class="rest">· Drupal · PHP · Java</span></p>
+        <p class="place" data-i18n="hero.place">Camp de Tarragona · remoto / híbrido</p>
       </div>
     </div>
-    <p class="lead">
+    <p class="lead" data-i18n="hero.lead">
       Desarrollador web full stack con dos años construyendo y manteniendo los sitios de once cuentas de
       administración pública e instituciones culturales: migraciones de versión mayor, multisite, theming,
       modelado de contenidos y accesibilidad, con la relación técnica directa con el cliente incluida.
       También APIs y automatización en Java y Python.
     </p>
     <div class="actions">
-      <a class="primary" href="mailto:aexpositona@gmail.com">Escríbeme</a>
-      <a href="https://github.com/Aexpositona" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
-      <a href="https://linkedin.com/in/alejandro-exposito-navarro" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
-      <a href="CV-Alejandro-Exposito-Navarro.pdf" target="_blank" rel="noopener">CV (PDF)<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+      <a class="primary" href="mailto:aexpositona@gmail.com" data-i18n="action.write">Escríbeme</a>
+      <a href="https://github.com/Aexpositona" target="_blank" rel="noopener">GitHub<span class="visually-hidden" data-i18n="a11y.newtab"> (se abre en una pestaña nueva)</span></a>
+      <a href="https://linkedin.com/in/alejandro-exposito-navarro" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden" data-i18n="a11y.newtab"> (se abre en una pestaña nueva)</span></a>
+      <a href="CV-Alejandro-Exposito-Navarro.pdf" target="_blank" rel="noopener"><span data-i18n="action.cv">CV (PDF)</span><span class="visually-hidden" data-i18n="a11y.newtab"> (se abre en una pestaña nueva)</span></a>
     </div>
     <hr class="hero-rule">
   </section>
 
   <section id="sobre-mi" aria-labelledby="h-sobre">
-    <div class="sec-head"><span class="num" aria-hidden="true">01</span><h2 id="h-sobre">Sobre mí</h2></div>
+    <div class="sec-head"><span class="num" aria-hidden="true">01</span><h2 id="h-sobre" data-i18n="h.about">Sobre mí</h2></div>
     <ul class="figs">
-      <li><b>57</b><span>webs migradas</span></li>
-      <li><b>11</b><span>cuentas gestionadas</span></li>
-      <li><b>31</b><span>dominios traspasados</span></li>
-      <li><b>2&nbsp;a</b><span>de experiencia</span></li>
+      <li><b>57</b><span data-i18n="fig.migrated">webs migradas</span></li>
+      <li><b>11</b><span data-i18n="fig.accounts">cuentas gestionadas</span></li>
+      <li><b>31</b><span data-i18n="fig.domains">dominios traspasados</span></li>
+      <li><b data-i18n="fig.yearsNum">2&nbsp;a</b><span data-i18n="fig.yearsLbl">de experiencia</span></li>
     </ul>
-    <p>
+    <p data-i18n="about.body">
       Vengo de agencia, llevando cuentas de sector público catalán y balear —Teatre Nacional de Catalunya,
       Ivàlua, Consell de Mallorca, MUHBA, Museu Frederic Marès—. Mi trabajo diario es Drupal 10/11 y PHP 8.3,
       pero también he hecho APIs y scripts en Java puro, herramientas internas en Python, y mantenimiento de
@@ -351,109 +377,109 @@
   </section>
 
   <section id="stack" aria-labelledby="h-stack">
-    <div class="sec-head"><span class="num" aria-hidden="true">02</span><h2 id="h-stack">Stack</h2></div>
+    <div class="sec-head"><span class="num" aria-hidden="true">02</span><h2 id="h-stack" data-i18n="h.stack">Stack</h2></div>
     <ul class="stack">
-      <li><b>Drupal <span class="hl">10 / 11</span></b><span>Migraciones de versión mayor, multisite, Paragraphs, Views, roles y permisos, módulos y temas a medida</span></li>
-      <li><b>Backend</b><span>PHP 8.3, Symfony (routing, DI, Twig, Console), MySQL, Drush, Composer · Java (APIs REST, scripts) · Python 3</span></li>
-      <li><b>WordPress · Shopify</b><span>Temas, mantenimiento, e-commerce y despliegue por preview no publicado</span></li>
-      <li><b>Entorno</b><span>DDEV, WSL2 / Linux, administración por SSH, Git · GitLab · GitHub, CI/CD, gestión de dominios y DNS</span></li>
-      <li><b>Front</b><span>Twig, HTML / CSS / Sass / Tailwind, JavaScript / TypeScript, React y React Native (Expo), diseño responsive</span></li>
-      <li><b>Accesibilidad</b><span>Auditorías WCAG y remediación</span></li>
-      <li><b>Dirección de IA</b><span>Orquestación de asistentes de código y agentes con MCP; prompting con criterios de aceptación para triaje, refactor y revisión</span></li>
-      <li><b>Idiomas</b><span>Castellano y catalán nativos · Inglés B1</span></li>
+      <li data-i18n="stack.drupal"><b>Drupal <span class="hl">10 / 11</span></b><span>Migraciones de versión mayor, multisite, Paragraphs, Views, roles y permisos, módulos y temas a medida</span></li>
+      <li data-i18n="stack.backend"><b>Backend</b><span>PHP 8.3, Symfony (routing, DI, Twig, Console), MySQL, Drush, Composer · Java (APIs REST, scripts) · Python 3</span></li>
+      <li data-i18n="stack.wpshopify"><b>WordPress · Shopify</b><span>Temas, mantenimiento, e-commerce y despliegue por preview no publicado</span></li>
+      <li data-i18n="stack.env"><b>Entorno</b><span>DDEV, WSL2 / Linux, administración por SSH, Git · GitLab · GitHub, CI/CD, gestión de dominios y DNS</span></li>
+      <li data-i18n="stack.front"><b>Front</b><span>Twig, HTML / CSS / Sass / Tailwind, JavaScript / TypeScript, React y React Native (Expo), diseño responsive</span></li>
+      <li data-i18n="stack.a11y"><b>Accesibilidad</b><span>Auditorías WCAG y remediación</span></li>
+      <li data-i18n="stack.ai"><b>Dirección de IA</b><span>Orquestación de asistentes de código y agentes con MCP; prompting con criterios de aceptación para triaje, refactor y revisión</span></li>
+      <li data-i18n="stack.langs"><b>Idiomas</b><span>Castellano y catalán nativos · Inglés B1</span></li>
     </ul>
   </section>
 
   <section id="experiencia" aria-labelledby="h-exp">
-    <div class="sec-head"><span class="num" aria-hidden="true">03</span><h2 id="h-exp">Experiencia</h2></div>
+    <div class="sec-head"><span class="num" aria-hidden="true">03</span><h2 id="h-exp" data-i18n="h.experience">Experiencia</h2></div>
     <ul class="timeline">
       <li class="job">
         <div class="head">
-          <h3>Fullstack Web Developer &amp; Key Account Manager</h3>
-          <span class="org">Kiwop · agencia digital, Reus</span>
-          <span class="when">jun 2024 – jul 2026</span>
+          <h3 data-i18n="job1.title">Desarrollador Web Full Stack y Key Account Manager</h3>
+          <span class="org" data-i18n="job1.org">Kiwop · agencia digital, Reus</span>
+          <span class="when" data-i18n="job1.when">jun 2024 – jul 2026</span>
         </div>
         <ul>
-          <li><strong>Migración de 57 webs municipales</strong> del Consell de Mallorca a un design system responsive y accesible: entorno de preproducción por municipio, runbook de despliegue, ventana de publicación de 5 minutos y rollback verificado.</li>
-          <li><strong>Migraciones a Drupal 11</strong> de Teatre Nacional de Catalunya e Ivàlua ante el EOL de Drupal 10: análisis de 22 módulos contribuidos, salto a <code>PHP 8.3</code>, CKEditor 5 y adaptación de módulos y tema a medida.</li>
-          <li>Modelado de contenidos con <strong>Paragraphs</strong> y Views, perfiles y permisos de edición, y <strong>auditoría y remediación de accesibilidad</strong> (WCAG).</li>
-          <li>Gestión de entornos con <strong>DDEV sobre WSL2</strong>, sincronía DEV/PRE/PRO y traspaso de <strong>31 dominios <code>.es</code></strong> ante NIC.es.</li>
-          <li>Herramienta interna en <strong>Python</strong> (control de horas, facturación en PDF, integración con Trello y API REST), empaquetada y entregada al equipo. Como <strong>KAM</strong>: propuestas, estimaciones, control de bolsas de horas y formación a los equipos editores del cliente.</li>
+          <li data-i18n="job1.li1"><strong>Migración de 57 webs municipales</strong> del Consell de Mallorca a un design system responsive y accesible: entorno de preproducción por municipio, runbook de despliegue, ventana de publicación de 5 minutos y rollback verificado.</li>
+          <li data-i18n="job1.li2"><strong>Migraciones a Drupal 11</strong> de Teatre Nacional de Catalunya e Ivàlua ante el EOL de Drupal 10: análisis de 22 módulos contribuidos, salto a <code>PHP 8.3</code>, CKEditor 5 y adaptación de módulos y tema a medida.</li>
+          <li data-i18n="job1.li3">Modelado de contenidos con <strong>Paragraphs</strong> y Views, perfiles y permisos de edición, y <strong>auditoría y remediación de accesibilidad</strong> (WCAG).</li>
+          <li data-i18n="job1.li4">Gestión de entornos con <strong>DDEV sobre WSL2</strong>, sincronía DEV/PRE/PRO y traspaso de <strong>31 dominios <code>.es</code></strong> ante NIC.es.</li>
+          <li data-i18n="job1.li5">Herramienta interna en <strong>Python</strong> (control de horas, facturación en PDF, integración con Trello y API REST), empaquetada y entregada al equipo. Como <strong>KAM</strong>: propuestas, estimaciones, control de bolsas de horas y formación a los equipos editores del cliente.</li>
         </ul>
       </li>
       <li class="job">
         <div class="head">
-          <h3>Operario de cadena de producción</h3>
-          <span class="org">Nissan Motor Ibérica</span>
-          <span class="when">2013 – 2020</span>
+          <h3 data-i18n="job2.title">Operario de cadena de producción</h3>
+          <span class="org" data-i18n="job2.org">Nissan Motor Ibérica</span>
+          <span class="when" data-i18n="job2.when">2013 – 2020</span>
         </div>
         <ul>
-          <li>Línea de montaje bajo estándar de automoción. De ahí el hábito del procedimiento escrito y de cazar el defecto en el propio puesto, que es como reviso hoy un despliegue.</li>
+          <li data-i18n="job2.li1">Línea de montaje bajo estándar de automoción. De ahí el hábito del procedimiento escrito y de cazar el defecto en el propio puesto, que es como reviso hoy un despliegue.</li>
         </ul>
       </li>
     </ul>
   </section>
 
   <section id="proyectos" aria-labelledby="h-proj">
-    <div class="sec-head"><span class="num" aria-hidden="true">04</span><h2 id="h-proj">Proyectos</h2></div>
+    <div class="sec-head"><span class="num" aria-hidden="true">04</span><h2 id="h-proj" data-i18n="h.projects">Proyectos</h2></div>
     <ul class="projects">
       <li class="card is-code">
-        <span class="kind">Proyecto propio</span>
+        <span class="kind" data-i18n="kind.own">Proyecto propio</span>
         <h3>Flora</h3>
-        <p>Juego educativo de botánica para aprender nombres científicos de plantas: varios modos de quiz, reconocimiento por imagen y CRUD completo de la colección, sin conexión.</p>
-        <p>App de escritorio con arquitectura <strong>MVC</strong> (controllers / models / views), persistencia en JSON y distribución como ejecutable Windows. Open source.</p>
+        <p data-i18n="proj.flora1">Juego educativo de botánica para aprender nombres científicos de plantas: varios modos de quiz, reconocimiento por imagen y CRUD completo de la colección, sin conexión.</p>
+        <p data-i18n="proj.flora2">App de escritorio con arquitectura <strong>MVC</strong> (controllers / models / views), persistencia en JSON y distribución como ejecutable Windows. Open source.</p>
         <ul class="tags"><li>Python</li><li>tkinter</li><li>Pillow</li><li>PyInstaller</li><li>MVC</li></ul>
-        <a class="repo" href="https://github.com/Aexpositona/Flora" target="_blank" rel="noopener">github.com/Aexpositona/Flora<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+        <a class="repo" href="https://github.com/Aexpositona/Flora" target="_blank" rel="noopener">github.com/Aexpositona/Flora<span class="visually-hidden" data-i18n="a11y.newtab"> (se abre en una pestaña nueva)</span></a>
       </li>
       <li class="card is-code">
-        <span class="kind">Proyecto propio</span>
+        <span class="kind" data-i18n="kind.own">Proyecto propio</span>
         <h3>Meals4yuris</h3>
-        <p>App móvil (Android / iOS) de planificación de comidas semanales en pareja: plan semanal, CRUD de recetas, despensa y lista de la compra autogenerada. 50 recetas, tema oscuro, bilingüe.</p>
-        <p>Enrutado por ficheros con <strong>Expo Router</strong>, estado global con <strong>Zustand</strong> + AsyncStorage y backend en <strong>Supabase</strong> (auth, Postgres, realtime). TypeScript estricto.</p>
+        <p data-i18n="proj.meals1">App móvil (Android / iOS) de planificación de comidas semanales en pareja: plan semanal, CRUD de recetas, despensa y lista de la compra autogenerada. 50 recetas, tema oscuro, bilingüe.</p>
+        <p data-i18n="proj.meals2">Enrutado por ficheros con <strong>Expo Router</strong>, estado global con <strong>Zustand</strong> + AsyncStorage y backend en <strong>Supabase</strong> (auth, Postgres, realtime). TypeScript estricto.</p>
         <ul class="tags"><li>React Native</li><li>Expo</li><li>TypeScript</li><li>Zustand</li><li>Supabase</li></ul>
-        <a class="repo" href="https://github.com/Aexpositona/Meals4yuris" target="_blank" rel="noopener">github.com/Aexpositona/Meals4yuris<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+        <a class="repo" href="https://github.com/Aexpositona/Meals4yuris" target="_blank" rel="noopener">github.com/Aexpositona/Meals4yuris<span class="visually-hidden" data-i18n="a11y.newtab"> (se abre en una pestaña nueva)</span></a>
       </li>
       <li class="card is-case">
-        <span class="kind">Caso de agencia</span>
-        <h3>Consell de Mallorca — 57 webs municipales</h3>
-        <p>Diseño y ejecución del proceso de migración de 57 sitios a un design system responsive y accesible: entorno PRE por municipio, runbook de despliegue y publicación en ventana de 5 minutos con rollback garantizado.</p>
+        <span class="kind" data-i18n="kind.case">Caso de agencia</span>
+        <h3 data-i18n="proj.cma.title">Consell de Mallorca — 57 webs municipales</h3>
+        <p data-i18n="proj.cma.body">Diseño y ejecución del proceso de migración de 57 sitios a un design system responsive y accesible: entorno PRE por municipio, runbook de despliegue y publicación en ventana de 5 minutos con rollback garantizado.</p>
         <ul class="tags"><li>Drupal</li><li>Design system</li><li>Despliegue</li><li>DNS</li></ul>
       </li>
       <li class="card is-case">
-        <span class="kind">Caso de agencia</span>
-        <h3>Drupal 10 → 11 · TNC e Ivàlua</h3>
-        <p>Análisis de módulos contribuidos y del salto a PHP 8.3 y CKEditor 5, adaptación de módulos y tema a medida, y auditoría de accesibilidad con su remediación.</p>
+        <span class="kind" data-i18n="kind.case">Caso de agencia</span>
+        <h3 data-i18n="proj.d11.title">Drupal 10 → 11 · TNC e Ivàlua</h3>
+        <p data-i18n="proj.d11.body">Análisis de módulos contribuidos y del salto a PHP 8.3 y CKEditor 5, adaptación de módulos y tema a medida, y auditoría de accesibilidad con su remediación.</p>
         <ul class="tags"><li>Drupal 11</li><li>PHP 8.3</li><li>WCAG</li><li>Symfony</li></ul>
       </li>
       <li class="card is-case">
-        <span class="kind">Caso de agencia</span>
-        <h3>Herramienta interna de control horario</h3>
-        <p>Sistema propio en Python para registro de horas, cierre diario, facturación en PDF con cuadre exacto e integración con Trello y API. Documentado y entregado al equipo.</p>
+        <span class="kind" data-i18n="kind.case">Caso de agencia</span>
+        <h3 data-i18n="proj.hct.title">Herramienta interna de control horario</h3>
+        <p data-i18n="proj.hct.body">Sistema propio en Python para registro de horas, cierre diario, facturación en PDF con cuadre exacto e integración con Trello y API. Documentado y entregado al equipo.</p>
         <ul class="tags"><li>Python</li><li>openpyxl</li><li>WeasyPrint</li><li>API REST</li></ul>
       </li>
     </ul>
   </section>
 
   <section id="formacion" aria-labelledby="h-form">
-    <div class="sec-head"><span class="num" aria-hidden="true">05</span><h2 id="h-form">Formación</h2></div>
+    <div class="sec-head"><span class="num" aria-hidden="true">05</span><h2 id="h-form" data-i18n="h.education">Formación</h2></div>
     <ul class="cols">
       <li>
-        <b>CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)</b>
-        <span>Grado Superior · Universitat Oberta de Catalunya · 2022 – 2025</span>
+        <b data-i18n="edu.dam.title">CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)</b>
+        <span data-i18n="edu.dam.meta">Grado Superior · Universitat Oberta de Catalunya · 2022 – 2025</span>
       </li>
       <li>
-        <b>Sectores</b>
-        <span>Administración pública e instituciones culturales — TNC · Ivàlua · Consell de Mallorca · MUHBA · Museu Frederic Marès · Vallès Oriental</span>
+        <b data-i18n="edu.sectors.title">Sectores</b>
+        <span data-i18n="edu.sectors.meta">Administración pública e instituciones culturales — TNC · Ivàlua · Consell de Mallorca · MUHBA · Museu Frederic Marès · Vallès Oriental</span>
       </li>
     </ul>
   </section>
 
   <section id="contacto" aria-labelledby="h-cont">
-    <div class="sec-head"><span class="num" aria-hidden="true">06</span><h2 id="h-cont">Contacto</h2></div>
+    <div class="sec-head"><span class="num" aria-hidden="true">06</span><h2 id="h-cont" data-i18n="h.contact">Contacto</h2></div>
     <ul class="contact-list">
       <li><a href="mailto:aexpositona@gmail.com">aexpositona@gmail.com</a></li>
-      <li><a href="https://github.com/Aexpositona" target="_blank" rel="noopener">github.com/Aexpositona<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a></li>
-      <li><a href="https://linkedin.com/in/alejandro-exposito-navarro" target="_blank" rel="noopener">linkedin.com/in/alejandro-exposito-navarro<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a></li>
+      <li><a href="https://github.com/Aexpositona" target="_blank" rel="noopener">github.com/Aexpositona<span class="visually-hidden" data-i18n="a11y.newtab"> (se abre en una pestaña nueva)</span></a></li>
+      <li><a href="https://linkedin.com/in/alejandro-exposito-navarro" target="_blank" rel="noopener">linkedin.com/in/alejandro-exposito-navarro<span class="visually-hidden" data-i18n="a11y.newtab"> (se abre en una pestaña nueva)</span></a></li>
     </ul>
   </section>
 
@@ -462,7 +488,7 @@
 <footer>
   <div class="wrap">
     <p class="mono">© <span id="y"></span> Alejandro Expósito Navarro</p>
-    <p>Sitio estático, sin dependencias ni rastreo. Construido siguiendo las WCAG 2.2 AA: contraste verificado, foco visible, navegación por teclado, semántica de landmarks y respeto a <span class="mono">prefers-reduced-motion</span>.</p>
+    <p data-i18n="footer.note">Sitio estático, sin dependencias ni rastreo. Construido siguiendo las WCAG 2.2 AA: contraste verificado, foco visible, navegación por teclado, semántica de landmarks y respeto a <span class="mono">prefers-reduced-motion</span>.</p>
   </div>
 </footer>
 
@@ -470,40 +496,337 @@
   (function () {
     'use strict';
     var root = document.documentElement;
+
+    /* ─────────────────────────────────────────────
+       i18n — castellano (es), català (ca), english (en)
+       El HTML ya lleva el castellano como contenido real:
+       sin JS, la página se ve entera en castellano.
+       ───────────────────────────────────────────── */
+    var I18N = {
+      es: {
+        'meta.title': 'Alejandro Expósito Navarro · Desarrollador Web Full Stack',
+        'meta.description': 'Desarrollador web full stack especializado en Drupal, PHP y Java. Migraciones, multisite, accesibilidad y automatización para administración pública e instituciones culturales.',
+        'meta.ogtitle': 'Alejandro Expósito Navarro · Desarrollador Web Full Stack',
+        'meta.ogdescription': 'Drupal · PHP · Java — migraciones, multisite, accesibilidad y automatización.',
+        'skip': 'Saltar al contenido',
+        'nav.aria': 'Secciones de la página',
+        'nav.about': 'Sobre mí',
+        'nav.stack': 'Stack',
+        'nav.experience': 'Experiencia',
+        'nav.projects': 'Proyectos',
+        'nav.contact': 'Contacto',
+        'lang.aria': 'Idioma',
+        'a11y.newtab': ' (se abre en una pestaña nueva)',
+        'hero.alt': 'Retrato de Alejandro Expósito Navarro',
+        'hero.role': 'Desarrollador Web Full Stack <span class="rest">· Drupal · PHP · Java</span>',
+        'hero.place': 'Camp de Tarragona · remoto / híbrido',
+        'hero.lead': 'Desarrollador web full stack con dos años construyendo y manteniendo los sitios de once cuentas de administración pública e instituciones culturales: migraciones de versión mayor, multisite, theming, modelado de contenidos y accesibilidad, con la relación técnica directa con el cliente incluida. También APIs y automatización en Java y Python.',
+        'action.write': 'Escríbeme',
+        'action.cv': 'CV (PDF)',
+        'h.about': 'Sobre mí',
+        'fig.migrated': 'webs migradas',
+        'fig.accounts': 'cuentas gestionadas',
+        'fig.domains': 'dominios traspasados',
+        'fig.yearsNum': '2&nbsp;a',
+        'fig.yearsLbl': 'de experiencia',
+        'about.body': 'Vengo de agencia, llevando cuentas de sector público catalán y balear —Teatre Nacional de Catalunya, Ivàlua, Consell de Mallorca, MUHBA, Museu Frederic Marès—. Mi trabajo diario es Drupal 10/11 y PHP 8.3, pero también he hecho APIs y scripts en Java puro, herramientas internas en Python, y mantenimiento de WordPress y Shopify. Trabajo con procedimiento escrito, ventanas de despliegue con rollback verificado y auditorías de accesibilidad. Busco un puesto estable de desarrollo full stack o backend, en remoto, híbrido o presencial en el Camp de Tarragona.',
+        'h.stack': 'Stack',
+        'stack.drupal': '<b>Drupal <span class="hl">10 / 11</span></b><span>Migraciones de versión mayor, multisite, Paragraphs, Views, roles y permisos, módulos y temas a medida</span>',
+        'stack.backend': '<b>Backend</b><span>PHP 8.3, Symfony (routing, DI, Twig, Console), MySQL, Drush, Composer · Java (APIs REST, scripts) · Python 3</span>',
+        'stack.wpshopify': '<b>WordPress · Shopify</b><span>Temas, mantenimiento, e-commerce y despliegue por preview no publicado</span>',
+        'stack.env': '<b>Entorno</b><span>DDEV, WSL2 / Linux, administración por SSH, Git · GitLab · GitHub, CI/CD, gestión de dominios y DNS</span>',
+        'stack.front': '<b>Front</b><span>Twig, HTML / CSS / Sass / Tailwind, JavaScript / TypeScript, React y React Native (Expo), diseño responsive</span>',
+        'stack.a11y': '<b>Accesibilidad</b><span>Auditorías WCAG y remediación</span>',
+        'stack.ai': '<b>Dirección de IA</b><span>Orquestación de asistentes de código y agentes con MCP; prompting con criterios de aceptación para triaje, refactor y revisión</span>',
+        'stack.langs': '<b>Idiomas</b><span>Castellano y catalán nativos · Inglés B1</span>',
+        'h.experience': 'Experiencia',
+        'job1.title': 'Desarrollador Web Full Stack y Key Account Manager',
+        'job1.org': 'Kiwop · agencia digital, Reus',
+        'job1.when': 'jun 2024 – jul 2026',
+        'job1.li1': '<strong>Migración de 57 webs municipales</strong> del Consell de Mallorca a un design system responsive y accesible: entorno de preproducción por municipio, runbook de despliegue, ventana de publicación de 5 minutos y rollback verificado.',
+        'job1.li2': '<strong>Migraciones a Drupal 11</strong> de Teatre Nacional de Catalunya e Ivàlua ante el EOL de Drupal 10: análisis de 22 módulos contribuidos, salto a <code>PHP 8.3</code>, CKEditor 5 y adaptación de módulos y tema a medida.',
+        'job1.li3': 'Modelado de contenidos con <strong>Paragraphs</strong> y Views, perfiles y permisos de edición, y <strong>auditoría y remediación de accesibilidad</strong> (WCAG).',
+        'job1.li4': 'Gestión de entornos con <strong>DDEV sobre WSL2</strong>, sincronía DEV/PRE/PRO y traspaso de <strong>31 dominios <code>.es</code></strong> ante NIC.es.',
+        'job1.li5': 'Herramienta interna en <strong>Python</strong> (control de horas, facturación en PDF, integración con Trello y API REST), empaquetada y entregada al equipo. Como <strong>KAM</strong>: propuestas, estimaciones, control de bolsas de horas y formación a los equipos editores del cliente.',
+        'job2.title': 'Operario de cadena de producción',
+        'job2.org': 'Nissan Motor Ibérica',
+        'job2.when': '2013 – 2020',
+        'job2.li1': 'Línea de montaje bajo estándar de automoción. De ahí el hábito del procedimiento escrito y de cazar el defecto en el propio puesto, que es como reviso hoy un despliegue.',
+        'h.projects': 'Proyectos',
+        'kind.own': 'Proyecto propio',
+        'kind.case': 'Caso de agencia',
+        'proj.flora1': 'Juego educativo de botánica para aprender nombres científicos de plantas: varios modos de quiz, reconocimiento por imagen y CRUD completo de la colección, sin conexión.',
+        'proj.flora2': 'App de escritorio con arquitectura <strong>MVC</strong> (controllers / models / views), persistencia en JSON y distribución como ejecutable Windows. Open source.',
+        'proj.meals1': 'App móvil (Android / iOS) de planificación de comidas semanales en pareja: plan semanal, CRUD de recetas, despensa y lista de la compra autogenerada. 50 recetas, tema oscuro, bilingüe.',
+        'proj.meals2': 'Enrutado por ficheros con <strong>Expo Router</strong>, estado global con <strong>Zustand</strong> + AsyncStorage y backend en <strong>Supabase</strong> (auth, Postgres, realtime). TypeScript estricto.',
+        'proj.cma.title': 'Consell de Mallorca — 57 webs municipales',
+        'proj.cma.body': 'Diseño y ejecución del proceso de migración de 57 sitios a un design system responsive y accesible: entorno PRE por municipio, runbook de despliegue y publicación en ventana de 5 minutos con rollback garantizado.',
+        'proj.d11.title': 'Drupal 10 → 11 · TNC e Ivàlua',
+        'proj.d11.body': 'Análisis de módulos contribuidos y del salto a PHP 8.3 y CKEditor 5, adaptación de módulos y tema a medida, y auditoría de accesibilidad con su remediación.',
+        'proj.hct.title': 'Herramienta interna de control horario',
+        'proj.hct.body': 'Sistema propio en Python para registro de horas, cierre diario, facturación en PDF con cuadre exacto e integración con Trello y API. Documentado y entregado al equipo.',
+        'h.education': 'Formación',
+        'edu.dam.title': 'CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)',
+        'edu.dam.meta': 'Grado Superior · Universitat Oberta de Catalunya · 2022 – 2025',
+        'edu.sectors.title': 'Sectores',
+        'edu.sectors.meta': 'Administración pública e instituciones culturales — TNC · Ivàlua · Consell de Mallorca · MUHBA · Museu Frederic Marès · Vallès Oriental',
+        'h.contact': 'Contacto',
+        'footer.note': 'Sitio estático, sin dependencias ni rastreo. Construido siguiendo las WCAG 2.2 AA: contraste verificado, foco visible, navegación por teclado, semántica de landmarks y respeto a <span class="mono">prefers-reduced-motion</span>.',
+        'theme.labelDark': 'Oscuro',
+        'theme.labelLight': 'Claro',
+        'theme.toDark': 'Cambiar a tema oscuro',
+        'theme.toLight': 'Cambiar a tema claro'
+      },
+      ca: {
+        'meta.title': 'Alejandro Expósito Navarro · Desenvolupador Web Full Stack',
+        'meta.description': 'Desenvolupador web full stack especialitzat en Drupal, PHP i Java. Migracions, multisite, accessibilitat i automatització per a administració pública i institucions culturals.',
+        'meta.ogtitle': 'Alejandro Expósito Navarro · Desenvolupador Web Full Stack',
+        'meta.ogdescription': 'Drupal · PHP · Java — migracions, multisite, accessibilitat i automatització.',
+        'skip': 'Salta al contingut',
+        'nav.aria': 'Seccions de la pàgina',
+        'nav.about': 'Sobre mi',
+        'nav.stack': 'Stack',
+        'nav.experience': 'Experiència',
+        'nav.projects': 'Projectes',
+        'nav.contact': 'Contacte',
+        'lang.aria': 'Llengua',
+        'a11y.newtab': ' (s’obre en una pestanya nova)',
+        'hero.alt': 'Retrat d’Alejandro Expósito Navarro',
+        'hero.role': 'Desenvolupador Web Full Stack <span class="rest">· Drupal · PHP · Java</span>',
+        'hero.place': 'Camp de Tarragona · remot / híbrid',
+        'hero.lead': 'Desenvolupador web full stack amb dos anys construint i mantenint els llocs d’onze comptes d’administració pública i institucions culturals: migracions de versió major, multisite, theming, modelatge de continguts i accessibilitat, amb la relació tècnica directa amb el client inclosa. També APIs i automatització en Java i Python.',
+        'action.write': 'Escriu-me',
+        'action.cv': 'CV (PDF)',
+        'h.about': 'Sobre mi',
+        'fig.migrated': 'webs migrades',
+        'fig.accounts': 'comptes gestionats',
+        'fig.domains': 'dominis traspassats',
+        'fig.yearsNum': '2&nbsp;a',
+        'fig.yearsLbl': 'd’experiència',
+        'about.body': 'Vinc d’agència, portant comptes de sector públic català i balear —Teatre Nacional de Catalunya, Ivàlua, Consell de Mallorca, MUHBA, Museu Frederic Marès—. La meva feina diària és Drupal 10/11 i PHP 8.3, però també he fet APIs i scripts en Java pur, eines internes en Python, i manteniment de WordPress i Shopify. Treballo amb procediment escrit, finestres de desplegament amb rollback verificat i auditories d’accessibilitat. Busco un lloc estable de desenvolupament full stack o backend, en remot, híbrid o presencial al Camp de Tarragona.',
+        'h.stack': 'Stack',
+        'stack.drupal': '<b>Drupal <span class="hl">10 / 11</span></b><span>Migracions de versió major, multisite, Paragraphs, Views, rols i permisos, mòduls i temes a mida</span>',
+        'stack.backend': '<b>Backend</b><span>PHP 8.3, Symfony (routing, DI, Twig, Console), MySQL, Drush, Composer · Java (APIs REST, scripts) · Python 3</span>',
+        'stack.wpshopify': '<b>WordPress · Shopify</b><span>Temes, manteniment, e-commerce i desplegament per preview no publicat</span>',
+        'stack.env': '<b>Entorn</b><span>DDEV, WSL2 / Linux, administració per SSH, Git · GitLab · GitHub, CI/CD, gestió de dominis i DNS</span>',
+        'stack.front': '<b>Front</b><span>Twig, HTML / CSS / Sass / Tailwind, JavaScript / TypeScript, React i React Native (Expo), disseny responsive</span>',
+        'stack.a11y': '<b>Accessibilitat</b><span>Auditories WCAG i esmena</span>',
+        'stack.ai': '<b>Direcció d’IA</b><span>Orquestració d’assistents de codi i agents amb MCP; prompting amb criteris d’acceptació per a triatge, refactor i revisió</span>',
+        'stack.langs': '<b>Idiomes</b><span>Castellà i català nadius · Anglès B1</span>',
+        'h.experience': 'Experiència',
+        'job1.title': 'Desenvolupador Web Full Stack i Key Account Manager',
+        'job1.org': 'Kiwop · agència digital, Reus',
+        'job1.when': 'juny 2024 – jul. 2026',
+        'job1.li1': '<strong>Migració de 57 webs municipals</strong> del Consell de Mallorca a un design system responsive i accessible: entorn de preproducció per municipi, runbook de desplegament, finestra de publicació de 5 minuts i rollback verificat.',
+        'job1.li2': '<strong>Migracions a Drupal 11</strong> del Teatre Nacional de Catalunya i Ivàlua davant l’EOL de Drupal 10: anàlisi de 22 mòduls contribuïts, salt a <code>PHP 8.3</code>, CKEditor 5 i adaptació de mòduls i tema a mida.',
+        'job1.li3': 'Modelatge de continguts amb <strong>Paragraphs</strong> i Views, perfils i permisos d’edició, i <strong>auditoria i esmena d’accessibilitat</strong> (WCAG).',
+        'job1.li4': 'Gestió d’entorns amb <strong>DDEV sobre WSL2</strong>, sincronia DEV/PRE/PRO i traspàs de <strong>31 dominis <code>.es</code></strong> davant NIC.es.',
+        'job1.li5': 'Eina interna en <strong>Python</strong> (control d’hores, facturació en PDF, integració amb Trello i API REST), empaquetada i lliurada a l’equip. Com a <strong>KAM</strong>: propostes, estimacions, control de bosses d’hores i formació als equips editors del client.',
+        'job2.title': 'Operari de cadena de producció',
+        'job2.org': 'Nissan Motor Ibérica',
+        'job2.when': '2013 – 2020',
+        'job2.li1': 'Línia de muntatge sota estàndard d’automoció. D’aquí l’hàbit del procediment escrit i de caçar el defecte al mateix lloc de treball, que és com reviso avui un desplegament.',
+        'h.projects': 'Projectes',
+        'kind.own': 'Projecte propi',
+        'kind.case': 'Cas d’agència',
+        'proj.flora1': 'Joc educatiu de botànica per aprendre noms científics de plantes: diversos modes de qüestionari, reconeixement per imatge i CRUD complet de la col·lecció, sense connexió.',
+        'proj.flora2': 'App d’escriptori amb arquitectura <strong>MVC</strong> (controllers / models / views), persistència en JSON i distribució com a executable Windows. Codi obert.',
+        'proj.meals1': 'App mòbil (Android / iOS) de planificació d’àpats setmanals en parella: pla setmanal, CRUD de receptes, rebost i llista de la compra autogenerada. 50 receptes, tema fosc, bilingüe.',
+        'proj.meals2': 'Enrutament per fitxers amb <strong>Expo Router</strong>, estat global amb <strong>Zustand</strong> + AsyncStorage i backend en <strong>Supabase</strong> (auth, Postgres, realtime). TypeScript estricte.',
+        'proj.cma.title': 'Consell de Mallorca — 57 webs municipals',
+        'proj.cma.body': 'Disseny i execució del procés de migració de 57 llocs a un design system responsive i accessible: entorn PRE per municipi, runbook de desplegament i publicació en finestra de 5 minuts amb rollback garantit.',
+        'proj.d11.title': 'Drupal 10 → 11 · TNC i Ivàlua',
+        'proj.d11.body': 'Anàlisi de mòduls contribuïts i del salt a PHP 8.3 i CKEditor 5, adaptació de mòduls i tema a mida, i auditoria d’accessibilitat amb la seva esmena.',
+        'proj.hct.title': 'Eina interna de control horari',
+        'proj.hct.body': 'Sistema propi en Python per al registre d’hores, tancament diari, facturació en PDF amb quadrament exacte i integració amb Trello i API. Documentat i lliurat a l’equip.',
+        'h.education': 'Formació',
+        'edu.dam.title': 'CFGS Desenvolupament d’Aplicacions Multiplataforma (DAM)',
+        'edu.dam.meta': 'Grau Superior · Universitat Oberta de Catalunya · 2022 – 2025',
+        'edu.sectors.title': 'Sectors',
+        'edu.sectors.meta': 'Administració pública i institucions culturals — TNC · Ivàlua · Consell de Mallorca · MUHBA · Museu Frederic Marès · Vallès Oriental',
+        'h.contact': 'Contacte',
+        'footer.note': 'Lloc estàtic, sense dependències ni rastreig. Construït seguint les WCAG 2.2 AA: contrast verificat, focus visible, navegació per teclat, semàntica de landmarks i respecte a <span class="mono">prefers-reduced-motion</span>.',
+        'theme.labelDark': 'Fosc',
+        'theme.labelLight': 'Clar',
+        'theme.toDark': 'Canvia al tema fosc',
+        'theme.toLight': 'Canvia al tema clar'
+      },
+      en: {
+        'meta.title': 'Alejandro Expósito Navarro · Full Stack Web Developer',
+        'meta.description': 'Full stack web developer specialised in Drupal, PHP and Java. Migrations, multisite, accessibility and automation for public administration and cultural institutions.',
+        'meta.ogtitle': 'Alejandro Expósito Navarro · Full Stack Web Developer',
+        'meta.ogdescription': 'Drupal · PHP · Java — migrations, multisite, accessibility and automation.',
+        'skip': 'Skip to content',
+        'nav.aria': 'Page sections',
+        'nav.about': 'About',
+        'nav.stack': 'Stack',
+        'nav.experience': 'Experience',
+        'nav.projects': 'Projects',
+        'nav.contact': 'Contact',
+        'lang.aria': 'Language',
+        'a11y.newtab': ' (opens in a new tab)',
+        'hero.alt': 'Portrait of Alejandro Expósito Navarro',
+        'hero.role': 'Full Stack Web Developer <span class="rest">· Drupal · PHP · Java</span>',
+        'hero.place': 'Camp de Tarragona · remote / hybrid',
+        'hero.lead': 'Full stack web developer with two years building and maintaining the websites of eleven public-administration and cultural-institution accounts: major-version migrations, multisite, theming, content modelling and accessibility, including direct technical contact with the client. Also APIs and automation in Java and Python.',
+        'action.write': 'Email me',
+        'action.cv': 'CV (PDF)',
+        'h.about': 'About me',
+        'fig.migrated': 'sites migrated',
+        'fig.accounts': 'accounts managed',
+        'fig.domains': 'domains transferred',
+        'fig.yearsNum': '2&nbsp;yr',
+        'fig.yearsLbl': 'of experience',
+        'about.body': 'I come from an agency background, handling Catalan and Balearic public-sector accounts —Teatre Nacional de Catalunya, Ivàlua, Consell de Mallorca, MUHBA, Museu Frederic Marès—. My day-to-day is Drupal 10/11 and PHP 8.3, but I have also built APIs and scripts in plain Java, internal tools in Python, and maintained WordPress and Shopify. I work with written procedures, deployment windows with verified rollback and accessibility audits. I’m looking for a stable full stack or backend development role: remote, hybrid or on-site in the Camp de Tarragona area.',
+        'h.stack': 'Stack',
+        'stack.drupal': '<b>Drupal <span class="hl">10 / 11</span></b><span>Major-version migrations, multisite, Paragraphs, Views, roles and permissions, custom modules and themes</span>',
+        'stack.backend': '<b>Backend</b><span>PHP 8.3, Symfony (routing, DI, Twig, Console), MySQL, Drush, Composer · Java (REST APIs, scripts) · Python 3</span>',
+        'stack.wpshopify': '<b>WordPress · Shopify</b><span>Themes, maintenance, e-commerce and deployment via unpublished preview</span>',
+        'stack.env': '<b>Environment</b><span>DDEV, WSL2 / Linux, SSH administration, Git · GitLab · GitHub, CI/CD, domain and DNS management</span>',
+        'stack.front': '<b>Front-end</b><span>Twig, HTML / CSS / Sass / Tailwind, JavaScript / TypeScript, React and React Native (Expo), responsive design</span>',
+        'stack.a11y': '<b>Accessibility</b><span>WCAG audits and remediation</span>',
+        'stack.ai': '<b>AI orchestration</b><span>Orchestrating code assistants and agents with MCP; prompting with acceptance criteria for triage, refactor and review</span>',
+        'stack.langs': '<b>Languages</b><span>Native Spanish and Catalan · English B1</span>',
+        'h.experience': 'Experience',
+        'job1.title': 'Full Stack Web Developer & Key Account Manager',
+        'job1.org': 'Kiwop · digital agency, Reus',
+        'job1.when': 'Jun 2024 – Jul 2026',
+        'job1.li1': '<strong>Migration of 57 municipal websites</strong> for the Consell de Mallorca to a responsive, accessible design system: a pre-production environment per municipality, a deployment runbook, a 5-minute publishing window and verified rollback.',
+        'job1.li2': '<strong>Drupal 11 migrations</strong> for Teatre Nacional de Catalunya and Ivàlua ahead of Drupal 10 EOL: review of 22 contributed modules, move to <code>PHP 8.3</code>, CKEditor 5 and adaptation of custom modules and theme.',
+        'job1.li3': 'Content modelling with <strong>Paragraphs</strong> and Views, editorial roles and permissions, and <strong>accessibility audit and remediation</strong> (WCAG).',
+        'job1.li4': 'Environment management with <strong>DDEV on WSL2</strong>, DEV/PRE/PRO sync and transfer of <strong>31 <code>.es</code> domains</strong> through NIC.es.',
+        'job1.li5': 'Internal tool in <strong>Python</strong> (time tracking, PDF invoicing, Trello and REST API integration), packaged and handed over to the team. As <strong>KAM</strong>: proposals, estimates, hour-budget tracking and training for the client’s editorial teams.',
+        'job2.title': 'Production line operator',
+        'job2.org': 'Nissan Motor Ibérica',
+        'job2.when': '2013 – 2020',
+        'job2.li1': 'Assembly line under automotive standards. That’s where the habit of written procedures and catching the defect right at the workstation comes from —the same way I review a deployment today.',
+        'h.projects': 'Projects',
+        'kind.own': 'Personal project',
+        'kind.case': 'Agency case',
+        'proj.flora1': 'An educational botany game for learning the scientific names of plants: several quiz modes, image recognition and full CRUD of the collection, offline.',
+        'proj.flora2': 'A desktop app with an <strong>MVC</strong> architecture (controllers / models / views), JSON persistence and distribution as a Windows executable. Open source.',
+        'proj.meals1': 'A mobile app (Android / iOS) for planning weekly meals as a couple: weekly plan, recipe CRUD, pantry and an auto-generated shopping list. 50 recipes, dark theme, bilingual.',
+        'proj.meals2': 'File-based routing with <strong>Expo Router</strong>, global state with <strong>Zustand</strong> + AsyncStorage and a <strong>Supabase</strong> backend (auth, Postgres, realtime). Strict TypeScript.',
+        'proj.cma.title': 'Consell de Mallorca — 57 municipal sites',
+        'proj.cma.body': 'Design and execution of the migration of 57 sites to a responsive, accessible design system: a PRE environment per municipality, a deployment runbook and publishing in a 5-minute window with guaranteed rollback.',
+        'proj.d11.title': 'Drupal 10 → 11 · TNC & Ivàlua',
+        'proj.d11.body': 'Review of contributed modules and the move to PHP 8.3 and CKEditor 5, adaptation of custom modules and theme, and an accessibility audit with its remediation.',
+        'proj.hct.title': 'Internal time-tracking tool',
+        'proj.hct.body': 'A custom Python system for logging hours, daily close-out, PDF invoicing with exact reconciliation and Trello and API integration. Documented and handed over to the team.',
+        'h.education': 'Education',
+        'edu.dam.title': 'Advanced Vocational Diploma in Multi-Platform Application Development (DAM)',
+        'edu.dam.meta': 'Higher Vocational Education · Universitat Oberta de Catalunya · 2022 – 2025',
+        'edu.sectors.title': 'Sectors',
+        'edu.sectors.meta': 'Public administration and cultural institutions — TNC · Ivàlua · Consell de Mallorca · MUHBA · Museu Frederic Marès · Vallès Oriental',
+        'h.contact': 'Contact',
+        'footer.note': 'Static site, no dependencies, no tracking. Built to WCAG 2.2 AA: verified contrast, visible focus, keyboard navigation, landmark semantics and respect for <span class="mono">prefers-reduced-motion</span>.',
+        'theme.labelDark': 'Dark',
+        'theme.labelLight': 'Light',
+        'theme.toDark': 'Switch to dark theme',
+        'theme.toLight': 'Switch to light theme'
+      }
+    };
+
+    var LANG_KEY = 'idioma';
+    var lang = 'es';
+
+    function t(key) {
+      return (I18N[lang] && I18N[lang][key] != null) ? I18N[lang][key] : I18N.es[key];
+    }
+
+    function setMeta(sel, attr, val) {
+      var el = document.querySelector(sel);
+      if (el && val != null) el.setAttribute(attr, val);
+    }
+
+    function applyLang(next) {
+      if (!I18N[next]) next = 'es';
+      lang = next;
+      root.setAttribute('lang', lang);
+
+      document.title = t('meta.title');
+      setMeta('meta[name="description"]', 'content', t('meta.description'));
+      setMeta('meta[property="og:title"]', 'content', t('meta.ogtitle'));
+      setMeta('meta[property="og:description"]', 'content', t('meta.ogdescription'));
+
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        var val = t(key);
+        if (val == null) return;
+        var attr = el.getAttribute('data-i18n-attr');
+        if (attr) el.setAttribute(attr, val);
+        else el.innerHTML = val;
+      });
+
+      document.querySelectorAll('.langsel button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang));
+      });
+
+      themeSync(currentTheme());
+    }
+
+    /* ── Idioma: elección guardada o detección del navegador ── */
+    function detectLang() {
+      var n = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
+      if (n.indexOf('ca') === 0) return 'ca';
+      if (n.indexOf('en') === 0) return 'en';
+      return 'es';
+    }
+    try {
+      var savedLang = localStorage.getItem(LANG_KEY);
+      lang = (savedLang === 'es' || savedLang === 'ca' || savedLang === 'en') ? savedLang : detectLang();
+    } catch (e) { lang = 'es'; }
+
+    document.querySelectorAll('.langsel button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        applyLang(b.getAttribute('data-lang'));
+        try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+      });
+    });
+
+    /* ─────────────────────────────────────────────
+       Tema claro / oscuro
+       ───────────────────────────────────────────── */
     var btn = document.getElementById('theme');
     var label = document.getElementById('theme-label');
-    var KEY = 'tema';
+    var THEME_KEY = 'tema';
 
     function systemDark() {
       return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
-    function current() {
+    function currentTheme() {
       return root.getAttribute('data-theme') || (systemDark() ? 'dark' : 'light');
     }
-    function apply(mode) {
-      root.setAttribute('data-theme', mode);
+    function themeSync(mode) {
       var isDark = mode === 'dark';
       if (btn) {
         btn.setAttribute('aria-pressed', String(isDark));
-        btn.setAttribute('aria-label', isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+        btn.setAttribute('aria-label', isDark ? t('theme.toLight') : t('theme.toDark'));
       }
-      if (label) label.textContent = isDark ? 'Claro' : 'Oscuro';
+      if (label) label.textContent = isDark ? t('theme.labelLight') : t('theme.labelDark');
+    }
+    function applyTheme(mode) {
+      root.setAttribute('data-theme', mode);
+      themeSync(mode);
     }
 
     try {
-      var saved = localStorage.getItem(KEY);
-      if (saved === 'light' || saved === 'dark') apply(saved);
-      else { root.removeAttribute('data-theme'); apply(current()); }
-    } catch (e) { apply(current()); }
+      var savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme === 'light' || savedTheme === 'dark') applyTheme(savedTheme);
+      else { root.removeAttribute('data-theme'); applyTheme(currentTheme()); }
+    } catch (e) { applyTheme(currentTheme()); }
 
     if (btn) {
       btn.hidden = false;
       btn.addEventListener('click', function () {
-        var next = current() === 'dark' ? 'light' : 'dark';
-        apply(next);
-        try { localStorage.setItem(KEY, next); } catch (e) {}
+        var next = currentTheme() === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
       });
     }
+
+    /* ── Aplica el idioma una vez el tema ya está resuelto ── */
+    applyLang(lang);
 
     var y = document.getElementById('y');
     if (y) y.textContent = new Date().getFullYear();
